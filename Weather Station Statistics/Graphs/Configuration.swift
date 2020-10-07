@@ -42,15 +42,15 @@ class YConfiguration {
 }
 
 class Trend {
-    let yValues: [Double]
+    let yValues: [Double?]
     let name: String
     
-    init(name: String, yValues: [Double]) {
+    init(name: String, yValues: [Double?]) {
         self.name = name
         self.yValues = yValues
     }
     
-    func getYValues() -> [Double] {
+    func getYValues() -> [Double?] {
         return self.yValues
     }
     

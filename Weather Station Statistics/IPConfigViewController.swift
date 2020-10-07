@@ -17,7 +17,7 @@ class IPConfigViewController: NSViewController {
     
     @IBAction func finishedPressed(_ sender: Any) {
         if self.automaticConfigRadioButton.state == .on {
-            ApplicationSetup.wsIP = "10.0.0.40"
+            ApplicationSetup.wsIP = "10.0.0.100"
             self.manualIPTextBox.isEnabled = false
         } else {
             ApplicationSetup.wsIP = self.manualIPTextBox.stringValue

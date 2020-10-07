@@ -30,8 +30,8 @@ class GraphHandler: GraphHandlingProtocol {
         
         let records = statement.Records
         for column in columns {
-            var yValues: [Double] = Array()
-            records.forEach{yValues.append($0[column]!)}
+            var yValues: [Double?] = Array()
+            records.forEach{yValues.append($0[column])}
             graph.addTrend(trend: Trend(name: column, yValues: yValues))
         }
         
@@ -67,7 +67,7 @@ extension GraphHandlerConfiguration {
     func getTrends(_ statement: DBStatement, _ fields: [String]) -> [Trend] {
         var trends: [Trend] = Array()
         for field in fields {
-            trends.append(Trend(name: field, yValues: statement.Records.map{$0[field]!}))
+            trends.append(Trend(name: field, yValues: statement.Records.map{$0[field]}))
         }
         return trends
     }

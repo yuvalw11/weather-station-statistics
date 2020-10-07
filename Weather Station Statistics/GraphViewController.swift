@@ -73,6 +73,23 @@ class GraphViewController: NSViewController
         self.titleLabel.stringValue = ""
     }
     
+    private func getXArraysForSet(yValues: [Double?]) -> [[Int]] {
+        var xArrays = Array<Array<Int>>()
+        var i = 0
+        var nextNillIndex = yValues.index(of: nil)
+        
+        while nextNillIndex != nil {
+            let j = nextNillIndex!
+            xArrays.append(Array(i..<j))
+            i = yValues[j..<yValues.count].firstIndex{$0 != nil}!
+            nextNillIndex = yValues[i..<yValues.count].index(of: nil)
+        }
+        
+        xArrays.append(Array(i..<yValues.count))
+        
+        return xArrays
+    }
+    
     func loadGraph() {
         self.titleLabel.stringValue = (graph?.getTitle())!
         let xSize = graph!.getXLabels().count
@@ -83,15 +100,18 @@ class GraphViewController: NSViewController
             let data = LineChartData()
             for (i, trend) in (graph?.getTrends())!.enumerated() {
                 let ys = trend.getYValues()
-                let yse = ys.enumerated().map { x, y in return ChartDataEntry(x: Double(x), y: y) }
-                let ds = LineChartDataSet(values: yse, label: trend.getName())
-                ds.colors = [colors[i % colors.count]]
-                ds.circleRadius = 4
-                ds.circleColors = [colors[i % colors.count]]
-                ds.drawValuesEnabled = true
-                ds.drawVerticalHighlightIndicatorEnabled = true
-                ds.drawHorizontalHighlightIndicatorEnabled = true
-                data.addDataSet(ds)
+                let xArrays = self.getXArraysForSet(yValues: ys)
+                for xValues in xArrays {
+                    let yse = xValues.map{ChartDataEntry(x: Double($0), y: ys[$0]!)}
+                    let ds = LineChartDataSet(values: yse, label: trend.getName())
+                    ds.colors = [colors[i % colors.count]]
+                    ds.circleRadius = 4
+                    ds.circleColors = [colors[i % colors.count]]
+                    ds.drawValuesEnabled = true
+                    ds.drawVerticalHighlightIndicatorEnabled = true
+                    ds.drawHorizontalHighlightIndicatorEnabled = true
+                    data.addDataSet(ds)
+                }
             }
             let formatter = DateAxisValueFormatter(labels: graph!.getXLabels())
             self.lineChartView.xAxis.valueFormatter = formatter
@@ -121,11 +141,14 @@ class GraphViewController: NSViewController
             let data = BarChartData()
             for (i, trend) in (graph?.getTrends())!.enumerated() {
                 let ys = trend.getYValues()
-                let yse = ys.enumerated().map { x, y in return BarChartDataEntry(x: Double(x), y: y) }
-                let ds = BarChartDataSet(values: yse, label: trend.getName())
-                ds.colors = [colors[i % colors.count]]
-                ds.drawValuesEnabled = true
-                data.addDataSet(ds)
+                let xArrays = self.getXArraysForSet(yValues: ys)
+                for xValues in xArrays {
+                    let yse = xValues.map{BarChartDataEntry(x: Double($0), y: ys[$0]!)}
+                    let ds = BarChartDataSet(values: yse, label: trend.getName())
+                    ds.colors = [colors[i % colors.count]]
+                    ds.drawValuesEnabled = true
+                    data.addDataSet(ds)
+                }
             }
             let formatter = DateAxisValueFormatter(labels: graph!.getXLabels())
             self.barChartView.xAxis.valueFormatter = formatter

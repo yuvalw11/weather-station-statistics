@@ -1,0 +1,224 @@
+//
+//  WeatherDatabase.swift
+//  Weather Station Statistics
+//
+//  Created by Yuval Weinstein on 20/03/2020.
+//  Copyright © 2020 Yuval Weinstein. All rights reserved.
+//
+
+import Foundation
+import SQLite
+import CoreData
+
+class WeatherDatabase {
+    
+    fileprivate var wsConnector: WsConnector?
+    fileprivate let dbDispatchQueue: DispatchQueue
+    fileprivate var dbFilesData: Dictionary<Int, Int>
+    fileprivate var wsFilesData: Dictionary<Int, Int>
+    
+    fileprivate var recordsTable: RecordsTable?
+    fileprivate var dayTable: DayTable?
+    fileprivate var monthTable: MonthTable?
+    fileprivate var yearTable: YearTable?
+    fileprivate var rainSeasonTable: RainSeasonTable?
+        
+    var records: RecordCollection
+    var days: RecordCollection
+    var months: RecordCollection
+    var years: RecordCollection
+    var seasonal: RecordCollection
+    
+    var dbDays: Dictionary<Date, DBStatement>
+    var dbMonths: Dictionary<Date, DBStatement>
+    var dbYears: Dictionary<Date, DBStatement>
+    var dbRecordsForDay: Dictionary<Date, DBStatement>
+    var dbDaysForMonth: Dictionary<Date, DBStatement>
+    var dbDaysForYear: Dictionary<Date, DBStatement>
+    var dbMonthsForyear: Dictionary<Date, DBStatement>
+    
+    fileprivate var observers: [DBObserver]
+
+    init(wsConnector: WsConnector?) throws {
+        
+        self.wsConnector = wsConnector
+        self.dbFilesData = Dictionary<Int, Int>()
+        self.wsFilesData = Dictionary<Int, Int>()
+        self.dbDispatchQueue = DispatchQueue(label: "dbQueue", qos: .default)
+        
+        self.observers = Array()
+                
+        self.dbDays = Dictionary()
+        self.dbMonths = Dictionary()
+        self.dbYears = Dictionary()
+        self.dbRecordsForDay = Dictionary()
+        self.dbDaysForMonth = Dictionary()
+        self.dbDaysForYear = Dictionary()
+        self.dbMonthsForyear = Dictionary()
+                
+        self.records = RecordCollection(records: [])
+        self.days = RecordCollection(records: [])
+        self.months = RecordCollection(records: [])
+        self.years = RecordCollection(records: [])
+        self.seasonal = RecordCollection(records: [])
+        
+        self.set()
+    }
+    
+    fileprivate func set() {
+        self.dbDispatchQueue.async {
+            let db = try! Connection("/Users/yuvalw11/Library/Containers/Yuval-Weinstein.Weather-Station-Statistics/Data/Documents/db.sqlite3")
+            self.recordsTable = RecordsTable(db: db, name: "Records")
+            self.dayTable = DayTable(db: db, table: self.recordsTable!)
+            self.monthTable = MonthTable(db: db, table: self.dayTable!)
+            self.yearTable = YearTable(db: db, table: self.monthTable!)
+            self.rainSeasonTable = RainSeasonTable(db: db, table: self.dayTable!)
+            
+            try! self.recordsTable?.create()
+            
+            if self.wsConnector != nil {
+                self.dbFilesData = try! self.recordsTable!.getYearsData()
+                self.update()
+            } else {
+                self.updateContainers(from: self.getLowestDate()!)
+            }
+            
+//            if self.recordsTable!.count > 0 {
+//                self.updateContainers(from: self.recordsTable!.lowestDate)
+//            }
+            
+        }
+    }
+    
+    func update() {
+        if self.wsConnector != nil {
+<<<<<<< HEAD
+            self.wsConnector!.assignResponseObserver(observer: WSConnectorDelegate(db: self))
+=======
+            self.wsConnector!.assignObserver(observer: WSConnectorDelegate(db: self))
+>>>>>>> 84cdbae... Simplifying WSCommunication design
+             self.wsConnector!.requestHistoryFiles()
+        }
+
+    }
+    
+    fileprivate func updateContainers(from: Date) {
+        var calendar = Calendar.current
+        calendar.timeZone = TimeZone(secondsFromGMT: 0)!
+        let highDate = self.recordsTable!.highestDate
+        
+        var min = calendar.date(from: calendar.dateComponents(Set(arrayLiteral: .month, .year), from: from))!
+        var max = calendar.date(from: calendar.dateComponents(Set(arrayLiteral: .month, .year), from: highDate))!
+        var newContainer = self.monthTable!.getContainerFromDate(from: min, to: max, componentsToAdd: DateComponents(timeZone: TimeZone(abbreviation: "GMT"), month: 1))
+        self.dbMonths.merge(newContainer) {$1}
+        
+        min = calendar.date(from: calendar.dateComponents(Set(arrayLiteral: .year), from: from))!
+        max = calendar.date(from: calendar.dateComponents(Set(arrayLiteral: .year), from: highDate))!
+        newContainer = self.yearTable!.getContainerFromDate(from: min, to: max, componentsToAdd: DateComponents(timeZone: TimeZone(abbreviation: "GMT"), year: 1))
+        self.dbYears.merge(newContainer) {$1}
+        
+        min = calendar.date(from: calendar.dateComponents(Set(arrayLiteral: .month, .year), from: from))!
+        max = calendar.date(from: calendar.dateComponents(Set(arrayLiteral: .month, .year), from: highDate))!
+        newContainer = self.dayTable!.getContainerFromDate(from: min, to: max, componentsToAdd: DateComponents(timeZone: TimeZone(abbreviation: "GMT"), month: 1))
+        self.dbDaysForMonth.merge(newContainer) {$1}
+        
+        min = calendar.date(from: calendar.dateComponents(Set(arrayLiteral: .year), from: from))!
+        max = calendar.date(from: calendar.dateComponents(Set(arrayLiteral: .year), from: highDate))!
+        newContainer = self.dayTable!.getContainerFromDate(from: min, to: max, componentsToAdd: DateComponents(timeZone: TimeZone(abbreviation: "GMT"), year: 1))
+        self.dbDaysForYear.merge(newContainer) {$1}
+        
+        min = calendar.date(from: calendar.dateComponents(Set(arrayLiteral: .year), from: from))!
+        max = calendar.date(from: calendar.dateComponents(Set(arrayLiteral: .year), from: highDate))!
+        newContainer = self.monthTable!.getContainerFromDate(from: min, to: max, componentsToAdd: DateComponents(timeZone: TimeZone(abbreviation: "GMT"), year: 1))
+        self.dbMonthsForyear.merge(newContainer) {$1}
+        
+        min = calendar.date(from: calendar.dateComponents(Set(arrayLiteral: .day, .month, .year), from: from))!
+        max = calendar.date(from: calendar.dateComponents(Set(arrayLiteral: .day, .month, .year), from: highDate))!
+        newContainer = self.dayTable!.getContainerFromDate(from: min, to: max, componentsToAdd: DateComponents(timeZone: TimeZone(abbreviation: "GMT"), day: 1))
+        self.dbDays.merge(newContainer) {$1}
+        
+        min = calendar.date(from: calendar.dateComponents(Set(arrayLiteral: .day, .month, .year), from: from))!
+        max = calendar.date(from: calendar.dateComponents(Set(arrayLiteral: .day, .month, .year), from: highDate))!
+        newContainer = self.recordsTable!.getContainerFromDate(from: min, to: max, componentsToAdd: DateComponents(timeZone: TimeZone(abbreviation: "GMT"), day: 1))
+        self.dbRecordsForDay.merge(newContainer) {$1}
+        
+        self.observers.forEach {$0.recordsChanged()}
+    }
+    
+    func getHighestDate() -> Date? {
+        guard let recordsTable = self.recordsTable else {
+            return nil
+        }
+        return recordsTable.highestDate
+    }
+    
+    func getLowestDate() -> Date? {
+        guard let recordsTable = self.recordsTable else {
+            return nil
+        }
+        return recordsTable.lowestDate
+    }
+   
+    func assignObserver(observer: DBObserver) {
+        self.observers.append(observer)
+    }
+    
+}
+
+class WSConnectorDelegate: ResponseObserver {
+    
+    let db: WeatherDatabase
+    var expecting: Int
+    var receieved: Int
+    let minDate: Date
+    
+    init(db: WeatherDatabase) {
+        self.db = db
+        self.expecting = 0
+        self.receieved = 0
+        self.minDate = self.db.getLowestDate()!
+    }
+    
+    func handle(response: HistoryDataResponse) {
+        self.db.dbDispatchQueue.async {
+            let dateFormatter = DateFormatter()
+            dateFormatter.timeZone = TimeZone(secondsFromGMT: 0)
+            dateFormatter.dateFormat = "yyyy"
+                    
+            let file = Int(dateFormatter.string(from: response.records[0].getDate()))!
+            self.db.recordsTable!.insertRecords(records: response.records)
+            print("inserting rows \(self.db.dbFilesData[file]!) to \(self.db.dbFilesData[file]! + response.records.count)")
+            self.db.dbFilesData[file] = self.db.dbFilesData[file]! + response.records.count
+                    
+            self.receieved += response.records.count
+            self.db.observers.forEach {$0.recordInserted(recordNumber: self.receieved, total: self.expecting)}
+            
+            print("received: \(self.receieved), expecting: \(self.expecting)")
+            if self.receieved == self.expecting {
+                self.db.wsConnector?.removeResponseObserver(observer: self)
+                print("updating containers")
+                self.db.updateContainers(from: self.minDate)
+            }
+        }
+    }
+    
+    func handle(response: HistoryFileResponse) {
+        self.db.dbDispatchQueue.async {
+            response.files.forEach {self.expecting += response.getNumberOfRecordsForFile(file: $0)! - (self.db.dbFilesData[$0] ?? 0)}
+            self.db.observers.forEach {$0.recordInserted(recordNumber: 0, total: self.expecting)}
+            
+            for file in response.files.sorted() {
+                let newNumOfRecords = response.getNumberOfRecordsForFile(file: file)!
+                if self.db.dbFilesData.keys.contains(file) {
+                    let numOfRecords = newNumOfRecords - self.db.dbFilesData[file]!
+                    if numOfRecords > 0 {
+                        self.db.wsConnector!.requestHistoryData(year: file, fromRecordNumber: self.db.dbFilesData[file]!, numberOfRecords: numOfRecords)
+                    }
+                } else {
+                    self.db.dbFilesData[file] = 0
+                    self.db.wsConnector!.requestHistoryData(year: file, fromRecordNumber: 0, numberOfRecords: newNumOfRecords)
+                }
+            }
+        }
+    }
+}

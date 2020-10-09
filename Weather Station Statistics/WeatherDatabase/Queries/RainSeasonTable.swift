@@ -11,10 +11,15 @@ import SQLite
 
 class RainSeasonTable: DBQuery, TableProtocol {
     
+    override var dateColumn: Expression<Date> {
+        return Expression<Date>("Date").rangeByMonth(month: Int64(ApplicationSetup.rainSeasonStartMonth))
+    }
+    
     override var expressionsMapper: Dictionary<String, Expression<Double?>> {
         return [
-            "RainRateMax": Expression<Double?>("RainRate").max,
-            "SeasonalRain": Expression<Double?>("YearlyRain").max,
+            "RainRateMax": Expression<Double?>("RainRateMax").max,
+            "SeasonalRain": Expression<Double?>("MonthlyRain").sum,
+            "NumberOfRainyDays": Expression<Double?>("NumberOfRainyDays").sum
         ]
     }
 }

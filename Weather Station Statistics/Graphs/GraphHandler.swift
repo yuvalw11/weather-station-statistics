@@ -23,8 +23,7 @@ class GraphHandler: GraphHandlingProtocol {
         let yConfig = self.config.dataTypeToYConfig[Data]!
         let columns = self.config.dataTypes[Data]!
         
-        let firstDate = statement.first!.date
-        let mainTitle = "\(Data) - \(self.config.titleDateFormatter.string(from: firstDate))"
+        let mainTitle = "\(Data)  \(self.config.getTitle(dates: statement.Records.map{$0.date}))"
         
         let graph = Graph(type: self.config.dataTypesToGraphType[Data]!, mainTitle: mainTitle)
         
@@ -99,5 +98,15 @@ extension GraphHandlerConfiguration {
         return formatters
     }
     
+    func getTitle(dates: [Date]) -> String {
+        let min = self.titleDateFormatter.string(from: dates.min()!)
+        let max = self.titleDateFormatter.string(from: dates.max()!)
+        
+        if min == max {
+            return min
+        } else {
+            return "\(min)-\(max)"
+        }
+    }
     
 }

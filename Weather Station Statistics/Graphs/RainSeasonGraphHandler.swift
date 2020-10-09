@@ -9,7 +9,7 @@
 import Foundation
 import Cocoa
 
-class RainGraphHandlerConfiguration: GraphHandlerConfiguration {
+class RainSeasonGraphHandlerConfiguration: GraphHandlerConfiguration {
     
     let months: DBStatement
     
@@ -31,25 +31,28 @@ class RainGraphHandlerConfiguration: GraphHandlerConfiguration {
     
     var statementToDataTypes: Dictionary<String, [String]> {
         return [
-            "By month": ["Rain"]
+            "By month": ["Rain", "Number of Rainy Days"]
         ]
     }
     
     var dataTypes: Dictionary<String, [String]> {
         return [
-            "Rain": ["MonthlyRain"]
+            "Rain": ["MonthlyRain"],
+            "Number of Rainy Days": ["NumberOfRainyDays"]
         ]
     }
     
     var dataTypesToGraphType: Dictionary<String, GraphType> {
         return [
-            "Rain": .Bar
+            "Rain": .Bar,
+            "Number of Rainy Days": .Bar
         ]
     }
     
     var dataTypeToYConfig: Dictionary<String, YConfiguration> {
         return [
-            "Rain": self.yConfigurationForDataType(dataType: "Rain", colors: [.blue], statement: self.months)
+            "Rain": self.yConfigurationForDataType(dataType: "Rain", colors: [.blue], statement: self.months),
+            "Number of Rainy Days": self.yConfigurationForDataType(dataType: "Number of Rainy Days", colors: [.blue], statement: self.months)
         ]
     }
     
@@ -59,7 +62,7 @@ class RainGraphHandlerConfiguration: GraphHandlerConfiguration {
     
     var xLabelsDateFormats: Dictionary<String, String> {
         return [
-            "By month": "MMM"
+            "By month": "MMM/yyyy"
         ]
     }
     

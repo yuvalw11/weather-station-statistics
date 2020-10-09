@@ -22,6 +22,8 @@ class ApplicationSetup {
     
     static var pathToContainer = "/Users/yuvalw11/Library/Containers/Yuval-Weinstein.Weather-Station-Statistics/Data/Documents"
     
+    static var rainSeasonStartMonth = 8
+    
     func loadDataTypeMapper() {
         
     }

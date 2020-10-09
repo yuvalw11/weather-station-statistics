@@ -63,13 +63,13 @@ class BaseTable {
         return Date()
     }
     
-    public func getContainerFromDate(from: Date, to: Date, componentsToAdd: DateComponents, lazy: Bool = false) -> Dictionary<Date, DBStatement> {
+    public func getContainerFromDate(from: Date, to: Date, componentsToAdd: DateComponents, lazy: Bool = false, saveDateAs: (Date) -> Date = {date in return date}) -> Dictionary<Date, DBStatement> {
         var date = from
         var container = Dictionary<Date, DBStatement>()
         
         while date <= to {
             let until: Date = BaseTable.calendar.date(byAdding: componentsToAdd, to: date)!
-            container[date] = self.getRowsForRange(from: date, range: componentsToAdd, lazy: lazy)!
+            container[saveDateAs(date)] = self.getRowsForRange(from: date, range: componentsToAdd, lazy: lazy)!
             date = until
         }
         return container

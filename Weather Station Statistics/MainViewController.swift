@@ -125,12 +125,11 @@ class MainViewController: NSViewController, DBObserver, ConnectionObserver, Pres
                 return EmptyPresentaion()
             }
         } else {
-            if self.db.seasonal.hasDate(date: date) {
-                return RainSeasonPresentation(record: db.seasonal.getRecordByDate(date: date)!, subRecords: RecordCollection(records: self.db.months.getRecordsForRange(from: date, to: Calendar.current.date(byAdding: DateComponents(year: 1), to: date)!)))
+            if self.db.dbRainSeasons.keys.contains(date) {
+                return RainSeasonPresentation(seasonRecord: self.db.dbRainSeasons[date]!.first!, monthsRecords: self.db.dbMonthsForRainSeason[date]!)
             } else {
                 return EmptyPresentaion()
             }
-            
         }
     }
         

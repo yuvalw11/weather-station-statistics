@@ -19,20 +19,16 @@ class WeatherDatabase {
     fileprivate var monthTable: MonthTable?
     fileprivate var yearTable: YearTable?
     fileprivate var rainSeasonTable: RainSeasonTable?
-        
-    var records: RecordCollection
-    var days: RecordCollection
-    var months: RecordCollection
-    var years: RecordCollection
-    var seasonal: RecordCollection
-    
+
     var dbDays: Dictionary<Date, DBStatement>
     var dbMonths: Dictionary<Date, DBStatement>
     var dbYears: Dictionary<Date, DBStatement>
+    var dbRainSeasons: Dictionary<Date, DBStatement>
     var dbRecordsForDay: Dictionary<Date, DBStatement>
     var dbDaysForMonth: Dictionary<Date, DBStatement>
     var dbDaysForYear: Dictionary<Date, DBStatement>
     var dbMonthsForyear: Dictionary<Date, DBStatement>
+    var dbMonthsForRainSeason: Dictionary<Date, DBStatement>
     
     fileprivate var observers: [DBObserver]
 
@@ -45,24 +41,20 @@ class WeatherDatabase {
         self.dbDays = Dictionary()
         self.dbMonths = Dictionary()
         self.dbYears = Dictionary()
+        self.dbRainSeasons = Dictionary()
         self.dbRecordsForDay = Dictionary()
         self.dbDaysForMonth = Dictionary()
         self.dbDaysForYear = Dictionary()
         self.dbMonthsForyear = Dictionary()
-                
-        self.records = RecordCollection(records: [])
-        self.days = RecordCollection(records: [])
-        self.months = RecordCollection(records: [])
-        self.years = RecordCollection(records: [])
-        self.seasonal = RecordCollection(records: [])
-        
+        self.dbMonthsForRainSeason = Dictionary()
+
         self.dbDispatchQueue.async {
             let db = try! Connection(ApplicationSetup.pathToDB)
             self.recordsTable = RecordsTable(db: db, name: "Records")
             self.dayTable = DayTable(db: db, table: self.recordsTable!)
             self.monthTable = MonthTable(db: db, table: self.dayTable!)
             self.yearTable = YearTable(db: db, table: self.monthTable!)
-            self.rainSeasonTable = RainSeasonTable(db: db, table: self.dayTable!)
+            self.rainSeasonTable = RainSeasonTable(db: db, table: self.monthTable!)
             
             try! self.recordsTable?.create()
         }
@@ -140,8 +132,27 @@ class WeatherDatabase {
         
         min = calendar.date(from: calendar.dateComponents(Set(arrayLiteral: .day, .month, .year), from: from))!
         max = calendar.date(from: calendar.dateComponents(Set(arrayLiteral: .day, .month, .year), from: highDate))!
-        newContainer = self.recordsTable!.getContainerFromDate(from: min, to: max, componentsToAdd: DateComponents(timeZone: TimeZone(abbreviation: "GMT"), day: 1), lazy: true)
+        newContainer = self.recordsTable!.getContainerFromDate(from: min, to: max, componentsToAdd: DateComponents(timeZone: TimeZone(abbreviation: "GMT"), day: 1))
         self.dbRecordsForDay.merge(newContainer) {$1}
+        
+        min = calendar.date(from: calendar.dateComponents(Set(arrayLiteral: .year), from: from))!
+        min = calendar.date(byAdding: DateComponents(month: ApplicationSetup.rainSeasonStartMonth - 1), to: min)!
+        max = calendar.date(from: calendar.dateComponents(Set(arrayLiteral: .year), from: highDate))!
+        max = calendar.date(byAdding: DateComponents(month: ApplicationSetup.rainSeasonStartMonth - 1), to: max)!
+        newContainer = self.rainSeasonTable!.getContainerFromDate(from: min, to: max, componentsToAdd: DateComponents(timeZone: TimeZone(abbreviation: "GMT"), year: 1)) { date in
+            return calendar.date(byAdding: DateComponents(month: -(ApplicationSetup.rainSeasonStartMonth - 1)), to: date)!
+        }
+        self.dbRainSeasons.merge(newContainer) {$1}
+        
+        min = calendar.date(from: calendar.dateComponents(Set(arrayLiteral: .year), from: from))!
+        min = calendar.date(byAdding: DateComponents(month: ApplicationSetup.rainSeasonStartMonth - 1), to: min)!
+        max = calendar.date(from: calendar.dateComponents(Set(arrayLiteral: .year), from: highDate))!
+        max = calendar.date(byAdding: DateComponents(month: ApplicationSetup.rainSeasonStartMonth - 1), to: max)!
+        newContainer = self.monthTable!.getContainerFromDate(from: min, to: max, componentsToAdd: DateComponents(timeZone: TimeZone(abbreviation: "GMT"), year: 1)) { date in
+            return calendar.date(byAdding: DateComponents(month: -(ApplicationSetup.rainSeasonStartMonth - 1)), to: date)!
+        }
+        self.dbMonthsForRainSeason.merge(newContainer) {$1}
+        
         
         self.observers.forEach {$0.recordsChanged()}
     }

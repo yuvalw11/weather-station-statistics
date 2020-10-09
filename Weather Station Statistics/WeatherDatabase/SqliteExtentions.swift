@@ -43,25 +43,17 @@ extension Expression where UnderlyingType == Date {
     }
     
     public var fullDay: Expression<Date> {
-        return Expression<Date>("strftime('%Y-%m-%dT%H:%M:%f', \(template), 'start of day')", bindings)
+        return self.datetime(modifiers: "start of day")
     }
     
     public var fullMonth: Expression<Date> {
-        return Expression<Date>("strftime('%Y-%m-%dT%H:%M:%f', \(template), 'start of month')", bindings)
+        return self.datetime(modifiers: "start of month")
     }
     
     public var fullYear: Expression<Date> {
-        return Expression<Date>("strftime('%Y-%m-%dT%H:%M:%f', \(template), 'start of year')", bindings)
+        return self.datetime(modifiers: "start of year")
     }
-    
-    public func datetime(modifiers: String...) -> Expression<Date> {
-        var modifiersString = ""
-        for i in 0..<modifiers.count {
-            modifiersString.append(", '\(modifiers[i])'")
-        }
-        return Expression<Date>("datetime(\(template) \(modifiersString))", bindings)
-    }
-    
+        
     public func rangeByMonth(month: Int64) -> Expression<Date> {
         let monthExp = self.month
         let predicate = (monthExp < month)
@@ -71,6 +63,15 @@ extension Expression where UnderlyingType == Date {
                 
         return caseStatement(predicate: predicate, choose: prevYearExp, elseChoose: thisYearExp)
     }
+    
+    public func datetime(modifiers: String...) -> Expression<Date> {
+        var modifiersString = ""
+        for i in 0..<modifiers.count {
+            modifiersString.append(", '\(modifiers[i])'")
+        }
+        return Expression<Date>("strftime('%Y-%m-%dT%H:%M:%f', \(template) \(modifiersString))", bindings)
+    }
+
 }
 
 extension Cursor {

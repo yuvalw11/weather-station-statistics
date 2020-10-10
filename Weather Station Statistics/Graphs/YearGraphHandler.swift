@@ -40,11 +40,20 @@ class YearGraphHandlerConfiguration: GraphHandlerConfiguration {
         ]
     }
     
+    var dataTypeToDescription: Dictionary<String, String> {
+        [
+            "Temperature day": "Temperature",
+            "Temperature month": "Temperature",
+            "Rain day": "Rain",
+            "Rain month": "Rain"
+        ]
+    }
+    
     var dataTypes: Dictionary<String, [String]> {
         return [
             "Temperature day": ["OutTempMax", "OutTempMin"],
             "Rain day": ["DailyRain"],
-            "Temperature month": ["OutTempMax", "OutTempMin"],
+            "Temperature month": ["AvgOutTempMax", "AvgOutTempMin"],
             "Rain month": ["MonthlyRain"]
         ]
     }

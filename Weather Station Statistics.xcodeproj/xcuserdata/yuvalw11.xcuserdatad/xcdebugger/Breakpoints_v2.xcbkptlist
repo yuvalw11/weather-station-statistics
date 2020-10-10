@@ -180,5 +180,117 @@
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "0719293F-45D2-4ABB-B6F2-1DCC656A6789"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Weather Station Statistics/Graphs/GraphHandler.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "22"
+            endingLineNumber = "22"
+            landmarkName = "getGraph(period:dataDescription:ymax:ymin:)"
+            landmarkType = "7">
+            <Locations>
+               <Location
+                  uuid = "0719293F-45D2-4ABB-B6F2-1DCC656A6789 - f9227b3cc15bf233"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "Weather_Station_Statistics.GraphHandler.getGraph(period: Swift.String, dataDescription: Swift.String, ymax: Swift.Optional&lt;Swift.Double&gt;, ymin: Swift.Optional&lt;Swift.Double&gt;) -&gt; Swift.Optional&lt;Weather_Station_Statistics.GraphProtocol&gt;"
+                  moduleName = "Weather Station Statistics"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/yuvalw11/Documents/Weather%20Station%20Statistics/Weather%20Station%20Statistics/Graphs/GraphHandler.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "22"
+                  endingLineNumber = "22"
+                  offsetFromSymbolStart = "217">
+               </Location>
+               <Location
+                  uuid = "0719293F-45D2-4ABB-B6F2-1DCC656A6789 - 29931043f7d33339"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "closure #1 (Swift.String) -&gt; Swift.Bool in Weather_Station_Statistics.GraphHandler.getGraph(period: Swift.String, dataDescription: Swift.String, ymax: Swift.Optional&lt;Swift.Double&gt;, ymin: Swift.Optional&lt;Swift.Double&gt;) -&gt; Swift.Optional&lt;Weather_Station_Statistics.GraphProtocol&gt;"
+                  moduleName = "Weather Station Statistics"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/yuvalw11/Documents/Weather%20Station%20Statistics/Weather%20Station%20Statistics/Graphs/GraphHandler.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "22"
+                  endingLineNumber = "22"
+                  offsetFromSymbolStart = "52">
+               </Location>
+            </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "49CA5E1D-4CA2-4EBC-8ED7-1925D198951A"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Weather Station Statistics/Graphs/GraphHandler.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "24"
+            endingLineNumber = "24"
+            landmarkName = "getGraph(period:dataDescription:ymax:ymin:)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "D27BC334-0121-4493-8E3E-03894A001118"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Weather Station Statistics/Graphs/GraphHandler.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "50"
+            endingLineNumber = "50"
+            landmarkName = "getDataDomainForPeriod(period:)"
+            landmarkType = "7">
+            <Locations>
+               <Location
+                  uuid = "D27BC334-0121-4493-8E3E-03894A001118 - b59cc9a58e1c8aee"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "Weather_Station_Statistics.GraphHandler.getDataDomainForPeriod(period: Swift.String) -&gt; Swift.Array&lt;Swift.String&gt;"
+                  moduleName = "Weather Station Statistics"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/yuvalw11/Documents/Weather%20Station%20Statistics/Weather%20Station%20Statistics/Graphs/GraphHandler.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "50"
+                  endingLineNumber = "50"
+                  offsetFromSymbolStart = "46">
+               </Location>
+               <Location
+                  uuid = "D27BC334-0121-4493-8E3E-03894A001118 - 44eddc0b469d68a8"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "closure #1 (Swift.String) -&gt; Swift.String in Weather_Station_Statistics.GraphHandler.getDataDomainForPeriod(period: Swift.String) -&gt; Swift.Array&lt;Swift.String&gt;"
+                  moduleName = "Weather Station Statistics"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/yuvalw11/Documents/Weather%20Station%20Statistics/Weather%20Station%20Statistics/Graphs/GraphHandler.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "50"
+                  endingLineNumber = "50"
+                  offsetFromSymbolStart = "40">
+               </Location>
+            </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
    </Breakpoints>
 </Bucket>

@@ -12,5 +12,5 @@ protocol GraphHandlingProtocol {
     
     func getPeriodDomain() -> [String]
     func getDataDomainForPeriod(period: String) -> [String]
-    func getGraph(period: String, Data: String, ymax: Double?, ymin: Double?) -> GraphProtocol?
+    func getGraph(period: String, dataDescription: String, ymax: Double?, ymin: Double?) -> GraphProtocol?
 }

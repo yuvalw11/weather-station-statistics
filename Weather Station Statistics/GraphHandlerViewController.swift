@@ -59,17 +59,32 @@ class GraphHandlerViewController: NSViewController
         self.graphViewController?.deleteGraph()
     }
     
-    func updateView() {
-        let dataType = self.dataTypePopUpButton.selectedItem?.title
-        let presentationMethod = self.presentationMethodPopUpButton.selectedItem?.title
-        self.presentationMethodPopUpButton.removeAllItems()
-        self.presentationMethodPopUpButton.addItems(withTitles: (self.handler?.getPeriodDomain())!)
+    private func updateDataTypes(presentaionMethod: String) {
+        let currntDataType = self.dataTypePopUpButton.selectedItem!.title
+        let newOptions = self.handler!.getDataDomainForPeriod(period: presentaionMethod)
         self.dataTypePopUpButton.removeAllItems()
-        self.dataTypePopUpButton.addItems(withTitles: (self.handler?.getDataDomainForPeriod(period: self.presentationMethodPopUpButton.selectedItem!.title))!)
-        if self.dataTypePopUpButton.itemTitles.contains(dataType!) && self.presentationMethodPopUpButton.itemTitles.contains(presentationMethod!) {
-            self.dataTypePopUpButton.selectItem(withTitle: dataType!)
-            self.presentationMethodPopUpButton.selectItem(withTitle: presentationMethod!)
+        self.dataTypePopUpButton.addItems(withTitles: newOptions)
+        
+        if newOptions.contains(currntDataType) {
+            self.dataTypePopUpButton.selectItem(withTitle: currntDataType)
         }
+    }
+    
+    private func updatePresentationMethods() {
+        let currentPresentationMethod = self.presentationMethodPopUpButton.selectedItem!.title
+        let newOptions = self.handler!.getPeriodDomain()
+        self.presentationMethodPopUpButton.removeAllItems()
+        self.presentationMethodPopUpButton.addItems(withTitles: newOptions)
+        
+        if newOptions.contains(currentPresentationMethod) {
+            self.presentationMethodPopUpButton.selectItem(withTitle: currentPresentationMethod)
+        }
+    }
+    
+    func updateView() {
+        self.updatePresentationMethods()
+        self.updateDataTypes(presentaionMethod: self.presentationMethodPopUpButton.selectedItem!.title)
+
         self.loadGraph()
         self.dataTypePopUpButton.isEnabled = true
         self.presentationMethodPopUpButton.isEnabled = true
@@ -82,7 +97,7 @@ class GraphHandlerViewController: NSViewController
     }
     
     func getGraph() -> GraphProtocol {
-        let graph = self.handler?.getGraph(period: (self.presentationMethodPopUpButton.selectedItem?.title)!, Data: (self.dataTypePopUpButton.selectedItem?.title)!, ymax: Double(self.maxTextField.stringValue), ymin: Double(self.minTextField.stringValue))!
+        let graph = self.handler?.getGraph(period: (self.presentationMethodPopUpButton.selectedItem?.title)!, dataDescription: (self.dataTypePopUpButton.selectedItem?.title)!, ymax: Double(self.maxTextField.stringValue), ymin: Double(self.minTextField.stringValue))!
         return graph!
     }
     
@@ -95,6 +110,7 @@ class GraphHandlerViewController: NSViewController
     }
     
     @IBAction func PresentationMethodPopUpButtonPressed(_ sender: Any) {
+        self.updateDataTypes(presentaionMethod: self.presentationMethodPopUpButton.selectedItem!.title)
         self.loadGraph()
     }
     

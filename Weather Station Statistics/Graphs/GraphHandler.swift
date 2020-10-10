@@ -17,15 +17,18 @@ class GraphHandler: GraphHandlingProtocol {
         self.config = handlerConfig
     }
     
-    func getGraph(period: String, Data: String, ymax: Double?, ymin: Double?) -> GraphProtocol? {
+    func getGraph(period: String, dataDescription: String, ymax: Double?, ymin: Double?) -> GraphProtocol? {
+        
+        let datatype = self.config.dataTypeToDescription.keys.first{self.config.dataTypeToDescription[$0] == dataDescription && self.config.statementToDataTypes[period]!.contains($0)}!
+        
         let statement = self.config.statements[period]!
         let xConfig = self.config.statementToXConfig[period]!
-        let yConfig = self.config.dataTypeToYConfig[Data]!
-        let columns = self.config.dataTypes[Data]!
+        let yConfig = self.config.dataTypeToYConfig[datatype]!
+        let columns = self.config.dataTypes[datatype]!
         
-        let mainTitle = "\(Data)  \(self.config.getTitle(dates: statement.Records.map{$0.date}))"
+        let mainTitle = "\(datatype)  \(self.config.getTitle(dates: statement.Records.map{$0.date}))"
         
-        let graph = Graph(type: self.config.dataTypesToGraphType[Data]!, mainTitle: mainTitle)
+        let graph = Graph(type: self.config.dataTypesToGraphType[datatype]!, mainTitle: mainTitle)
         
         let records = statement.Records
         for column in columns {
@@ -44,7 +47,7 @@ class GraphHandler: GraphHandlingProtocol {
     }
     
     func getDataDomainForPeriod(period: String) -> [String] {
-        return self.config.statementToDataTypes[period]!
+        return self.config.statementToDataTypes[period]!.map{self.config.dataTypeToDescription[$0]!}
     }
     
 }
@@ -53,6 +56,7 @@ protocol GraphHandlerConfiguration {
     var statements: Dictionary<String, DBStatement> {get}
     var statementToXConfig: Dictionary<String, XConfiguration>{get}
     var statementToDataTypes: Dictionary<String, [String]>{get}
+    var dataTypeToDescription: Dictionary<String, String>{get}
   
     var dataTypes: Dictionary<String, [String]>{get}
     var dataTypesToGraphType: Dictionary<String, GraphType>{get}
@@ -78,6 +82,10 @@ extension GraphHandlerConfiguration {
     func xConfigurationForStatement(statementKey: String) -> XConfiguration {
         let dates = self.statements[statementKey]!.Records.map{$0.date}
         return XConfiguration(xLabel: statementKey, xLabels: dates.map{self.xLabelsDateFormatters[statementKey]!.string(from: $0)}, xValues: dates.map{$0.timeIntervalSince1970})
+    }
+    
+    var dataTypeToDescription: Dictionary<String, String> {
+        Dictionary(self.dataTypes.keys.map{($0, $0)}, uniquingKeysWith: {(v1, v2) in return v1})
     }
     
     var titleDateFormatter: DateFormatter {

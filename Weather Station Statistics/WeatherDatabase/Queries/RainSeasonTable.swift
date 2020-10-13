@@ -19,7 +19,8 @@ class RainSeasonTable: DBQuery, TableProtocol {
         return [
             "RainRateMax": Expression<Double?>("RainRateMax").max,
             "SeasonalRain": Expression<Double?>("MonthlyRain").sum,
-            "NumberOfRainyDays": Expression<Double?>("NumberOfRainyDays").sum
+            "NumberOfRainyDays": Expression<Double?>("NumberOfRainyDays").sum,
+            "Measurements": Expression<Double?>("Measurements").sum
         ]
     }
 }

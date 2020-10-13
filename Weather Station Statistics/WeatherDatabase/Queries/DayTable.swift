@@ -36,7 +36,8 @@ class DayTable: DBQuery, TableProtocol {
             "DailyRain": Expression<Double?>("DailyRain").max,
             "WasRain": cast(Expression<Double?>("DailyRain").max > Expression<Double>(literal: "0.0")),
             "RadiationMax": Expression<Double?>("Radiation").max,
-            "UVIMax": Expression<Double?>("UVI").max
+            "UVIMax": Expression<Double?>("UVI").max,
+            "Measurements": cast(Expression<Int?>("Id").count) 
         ]
     }
     

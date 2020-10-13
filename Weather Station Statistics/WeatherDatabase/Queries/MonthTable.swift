@@ -14,10 +14,10 @@ class MonthTable: DBQuery, TableProtocol {
     override var expressionsMapper: Dictionary<String, Expression<Double?>> {
         
         return [
-            "AvgOutTempMax": Expression<Double?>("OutTempMax").sum / cast(Expression<Double?>("Id").count),
-            "AvgOutTempMin": Expression<Double?>("OutTempMin").sum / cast(Expression<Double?>("Id").count),
-            "AvgOutHumMax": Expression<Double?>("OutHumMax").sum / cast(Expression<Double?>("Id").count),
-            "AvgOutHumMin": Expression<Double?>("OutHumMin").sum / cast(Expression<Double?>("Id").count),
+            "AvgOutTempMax": Expression<Double?>("OutTempMax").sum / (cast(Expression<Double?>("Id").count) as Expression<Double?>),
+            "AvgOutTempMin": Expression<Double?>("OutTempMin").sum / (cast(Expression<Double?>("Id").count) as Expression<Double?>),
+            "AvgOutHumMax": Expression<Double?>("OutHumMax").sum / (cast(Expression<Double?>("Id").count) as Expression<Double?>),
+            "AvgOutHumMin": Expression<Double?>("OutHumMin").sum / (cast(Expression<Double?>("Id").count) as Expression<Double?>),
             
             "OutTempMax": Expression<Double?>("OutTempMax").max,
             "OutTempMin": Expression<Double?>("OutTempMin").min,
@@ -49,7 +49,9 @@ class MonthTable: DBQuery, TableProtocol {
             "RadiationMaxAvg": Expression<Double?>("RadiationMax").average,
             
             "UVIMax": Expression<Double?>("UVIMax").max,
-            "UVIMaxAvg": Expression<Double?>("UVIMax").average
+            "UVIMaxAvg": Expression<Double?>("UVIMax").average,
+            
+            "Measurements": Expression<Double?>("Measurements").sum
         ]
     }
     

@@ -145,3 +145,7 @@ public func cast<T: Value, U: Value>(_ expression: Expression<T>) -> Expression<
 public func cast<T: Value, U: Value>(_ expression: Expression<T?>) -> Expression<U?> {
     return Expression("CAST (\(expression.template) AS \(U.declaredDatatype))", expression.bindings)
 }
+
+public func cast<T: Value, U: Value>(_ expression: Expression<T>) -> Expression<U?> {
+    return Expression("CAST (\(expression.template) AS \(U.declaredDatatype))", expression.bindings)
+}

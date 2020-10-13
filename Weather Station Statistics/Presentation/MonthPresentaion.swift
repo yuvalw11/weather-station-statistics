@@ -68,12 +68,12 @@ class MonthPresentation: StaticPresentationProtocol {
     }
     
     func getCenterText() -> String {
-        let rainyDaysNum = self.self.monthRecord["NumberOfRainyDays"]
-        let hotDaysNum = self.self.monthRecord["NumberOfHotDays"]
+        let rainyDaysNum = self.monthRecord["NumberOfRainyDays"]
+        let hotDaysNum = self.monthRecord["NumberOfHotDays"]
+        let amountOfMeasures = self.monthRecord["Measurements"]
         let rainyDaysNumStr = String(Int(rainyDaysNum!))
         let hotDaysNumStr = String(Int(hotDaysNum!))
-//        let amountOfMeasures = record.getAmountOfMeasures()
-        let amountOfMeasuresStr = String("--")
+        let amountOfMeasuresStr = String(Int(amountOfMeasures!))
         
         return "Amount of rainy days: " + rainyDaysNumStr + "\n" + "Amount of hot days: " + hotDaysNumStr + "\n" + "Amount of measures: " + amountOfMeasuresStr
     }

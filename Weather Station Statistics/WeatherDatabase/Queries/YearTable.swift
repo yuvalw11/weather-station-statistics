@@ -17,10 +17,10 @@ class YearTable: DBQuery, TableProtocol {
     
     override var expressionsMapper: Dictionary<String, Expression<Double?>> {
         return [
-            "AvgOutTempMax": Expression<Double?>("AvgOutTempMax").sum / cast(Expression<Double?>("Id").count),
-            "AvgOutTempMin": Expression<Double?>("AvgOutTempMin").sum / cast(Expression<Double?>("Id").count),
-            "AvgOutHumMax": Expression<Double?>("AvgOutHumMax").sum / cast(Expression<Double?>("Id").count),
-            "AvgOutHumMin": Expression<Double?>("AvgOutHumMin").sum / cast(Expression<Double?>("Id").count),
+            "AvgOutTempMax": Expression<Double?>("AvgOutTempMax").sum / (cast(Expression<Double?>("Id").count) as Expression<Double?>),
+            "AvgOutTempMin": Expression<Double?>("AvgOutTempMin").sum / (cast(Expression<Double?>("Id").count) as Expression<Double?>),
+            "AvgOutHumMax": Expression<Double?>("AvgOutHumMax").sum / (cast(Expression<Double?>("Id").count) as Expression<Double?>),
+            "AvgOutHumMin": Expression<Double?>("AvgOutHumMin").sum / (cast(Expression<Double?>("Id").count) as Expression<Double?>),
             "OutTempMax": Expression<Double?>("OutTempMax").max,
             "OutTempMin": Expression<Double?>("OutTempMin").min,
             "OutHumMax": Expression<Double?>("OutHumMax").max,
@@ -43,7 +43,8 @@ class YearTable: DBQuery, TableProtocol {
             "NumberOfRainyDays": Expression<Double?>("NumberOfRainyDays").sum,
             "NumberOfHotDays": Expression<Double?>("NumberOfHotDays").sum,
             "RadiationMax": Expression<Double?>("RadiationMax").max,
-            "UVIMax": Expression<Double?>("UVIMax").max
+            "UVIMax": Expression<Double?>("UVIMax").max,
+            "Measurements": Expression<Double?>("Measurements").sum
         ]
     }
     

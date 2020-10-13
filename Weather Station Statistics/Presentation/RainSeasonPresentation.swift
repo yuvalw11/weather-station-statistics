@@ -41,7 +41,10 @@ class RainSeasonPresentation: StaticPresentationProtocol {
     }
     
     func getCenterText() -> String {
-        return ""
+        let amountOfMeasures = self.seasonRecord["Measurements"]
+        let amountOfMeasuresStr = String(Int(amountOfMeasures!))
+        return "Amount of measures: \(amountOfMeasuresStr)"
+
     }
     
     func getGraphHandlingProtocol() -> GraphHandlingProtocol? {

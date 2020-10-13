@@ -63,14 +63,14 @@ class YearPresentation: StaticPresentationProtocol {
     }
     
     func getCenterText() -> String {
-        let rainyDaysNum = self.self.yearRecord["NumberOfRainyDays"]
-        let hotDaysNum = self.self.yearRecord["NumberOfHotDays"]
+        let rainyDaysNum = self.yearRecord["NumberOfRainyDays"]
+        let hotDaysNum = self.yearRecord["NumberOfHotDays"]
         let rainyDaysNumStr = String(Int(rainyDaysNum!))
         let hotDaysNumStr = String(Int(hotDaysNum!))
-//        let amountOfMeasures = record.getAmountOfMeasures()
-//        let amountOfMeasuresStr = String(amountOfMeasures)
+        let amountOfMeasures = self.yearRecord["Measurements"]
+        let amountOfMeasuresStr = String(Int(amountOfMeasures!))
         
-        return "Amount of rainy days: " + rainyDaysNumStr + "\n" + "Amount of hot days: " + hotDaysNumStr + "\n" + "Amount of measures: --"
+        return "Amount of rainy days: " + rainyDaysNumStr + "\n" + "Amount of hot days: " + hotDaysNumStr + "\n" + "Amount of measures: \(amountOfMeasuresStr)"
     }
     
     func getGraphHandlingProtocol() -> GraphHandlingProtocol? {

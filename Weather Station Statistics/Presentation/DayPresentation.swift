@@ -57,9 +57,9 @@ class DayPresentation: StaticPresentationProtocol {
     }
     
     func getCenterText() -> String {
-//        let amountOfMeasures = record.getAmountOfMeasures()
-//        let amountOfMeasuresStr = String(amountOfMeasures)
-        return "Amount of measures: --"
+        let amountOfMeasures = self.dayRecord["Measurements"]
+        let amountOfMeasuresStr = String(Int(amountOfMeasures!))
+        return "Amount of measures: \(amountOfMeasuresStr)"
     }
     
     func getGraphHandlingProtocol() -> GraphHandlingProtocol? {

@@ -65,12 +65,13 @@ class HomePresentation: PresentationProtocol, ConnectionObserver, DBObserver {
         guard let currentRecord = self.record, let dbDayStatement = self.db.dbDays[self.currentDate] else {
             return "Can't get weather data."
         }
-                
+                        
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "d/M/yy - HH:mm"
                 
         let lines = [
             String(format: "Last update: %@", dateFormatter.string(from: currentRecord.time)),
+            String(format: "Amount of measures: %d", Int(dbDayStatement.first!["Measurements"]!)),
             String(format: "Today's high: %.1f˚", (dbDayStatement.first!["OutTempMax"])!),
             String(format: "Today's low: %.1f˚", (dbDayStatement.first!["OutTempMin"])!)
         ]

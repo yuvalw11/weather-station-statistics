@@ -62,7 +62,7 @@ class WeatherDatabase {
     
     func set() {
         self.dbDispatchQueue.async {
-            self.updateContainers(from: self.getLowestDate()!)
+            self.updateContainers()
         }
     }
     
@@ -79,11 +79,10 @@ class WeatherDatabase {
     fileprivate func insert(records: [Record], shouldUpdateContainers: Bool) {
         self.recordsTable!.insertRecords(records: records)
         if shouldUpdateContainers{
-            self.updateContainers(from: self.getLowestDate()!)
+            self.updateContainers()
         }
-        sleep(3)
     }
-    
+        
     func insertRecords(records: [Record]) {
         self.insert(records: records, shouldUpdateContainers: true)
         self.observers.forEach { (observer) in
@@ -95,63 +94,64 @@ class WeatherDatabase {
         return InsertSession(id: id, db: self)
     }
                 
-    fileprivate func updateContainers(from: Date) {
+    fileprivate func updateContainers() {
         var calendar = Calendar.current
         calendar.timeZone = TimeZone(secondsFromGMT: 0)!
+        let lowDate = self.dbDays.keys.sorted().last ?? self.getLowestDate()!
         let highDate = self.recordsTable!.highestDate
         
-        var min = calendar.date(from: calendar.dateComponents(Set(arrayLiteral: .month, .year), from: from))!
+        var min = calendar.date(from: calendar.dateComponents(Set(arrayLiteral: .month, .year), from: lowDate))!
         var max = calendar.date(from: calendar.dateComponents(Set(arrayLiteral: .month, .year), from: highDate))!
         var newContainer = self.monthTable!.getContainerFromDate(from: min, to: max, componentsToAdd: DateComponents(timeZone: TimeZone(abbreviation: "GMT"), month: 1))
-        self.dbMonths.merge(newContainer) {$1}
+        self.dbMonths.merge(newContainer) {(oldStatement, newStatement) in return newStatement}
         
-        min = calendar.date(from: calendar.dateComponents(Set(arrayLiteral: .year), from: from))!
+        min = calendar.date(from: calendar.dateComponents(Set(arrayLiteral: .year), from: lowDate))!
         max = calendar.date(from: calendar.dateComponents(Set(arrayLiteral: .year), from: highDate))!
         newContainer = self.yearTable!.getContainerFromDate(from: min, to: max, componentsToAdd: DateComponents(timeZone: TimeZone(abbreviation: "GMT"), year: 1))
-        self.dbYears.merge(newContainer) {$1}
+        self.dbYears.merge(newContainer) {(oldStatement, newStatement) in return newStatement}
         
-        min = calendar.date(from: calendar.dateComponents(Set(arrayLiteral: .month, .year), from: from))!
+        min = calendar.date(from: calendar.dateComponents(Set(arrayLiteral: .month, .year), from: lowDate))!
         max = calendar.date(from: calendar.dateComponents(Set(arrayLiteral: .month, .year), from: highDate))!
         newContainer = self.dayTable!.getContainerFromDate(from: min, to: max, componentsToAdd: DateComponents(timeZone: TimeZone(abbreviation: "GMT"), month: 1))
-        self.dbDaysForMonth.merge(newContainer) {$1}
+        self.dbDaysForMonth.merge(newContainer) {(oldStatement, newStatement) in return newStatement}
         
-        min = calendar.date(from: calendar.dateComponents(Set(arrayLiteral: .year), from: from))!
+        min = calendar.date(from: calendar.dateComponents(Set(arrayLiteral: .year), from: lowDate))!
         max = calendar.date(from: calendar.dateComponents(Set(arrayLiteral: .year), from: highDate))!
         newContainer = self.dayTable!.getContainerFromDate(from: min, to: max, componentsToAdd: DateComponents(timeZone: TimeZone(abbreviation: "GMT"), year: 1))
-        self.dbDaysForYear.merge(newContainer) {$1}
+        self.dbDaysForYear.merge(newContainer) {(oldStatement, newStatement) in return newStatement}
         
-        min = calendar.date(from: calendar.dateComponents(Set(arrayLiteral: .year), from: from))!
+        min = calendar.date(from: calendar.dateComponents(Set(arrayLiteral: .year), from: lowDate))!
         max = calendar.date(from: calendar.dateComponents(Set(arrayLiteral: .year), from: highDate))!
         newContainer = self.monthTable!.getContainerFromDate(from: min, to: max, componentsToAdd: DateComponents(timeZone: TimeZone(abbreviation: "GMT"), year: 1))
-        self.dbMonthsForyear.merge(newContainer) {$1}
+        self.dbMonthsForyear.merge(newContainer) {(oldStatement, newStatement) in return newStatement}
         
-        min = calendar.date(from: calendar.dateComponents(Set(arrayLiteral: .day, .month, .year), from: from))!
+        min = calendar.date(from: calendar.dateComponents(Set(arrayLiteral: .day, .month, .year), from: lowDate))!
         max = calendar.date(from: calendar.dateComponents(Set(arrayLiteral: .day, .month, .year), from: highDate))!
         newContainer = self.dayTable!.getContainerFromDate(from: min, to: max, componentsToAdd: DateComponents(timeZone: TimeZone(abbreviation: "GMT"), day: 1))
-        self.dbDays.merge(newContainer) {$1}
+        self.dbDays.merge(newContainer) {(oldStatement, newStatement) in return newStatement}
         
-        min = calendar.date(from: calendar.dateComponents(Set(arrayLiteral: .day, .month, .year), from: from))!
+        min = calendar.date(from: calendar.dateComponents(Set(arrayLiteral: .day, .month, .year), from: lowDate))!
         max = calendar.date(from: calendar.dateComponents(Set(arrayLiteral: .day, .month, .year), from: highDate))!
         newContainer = self.recordsTable!.getContainerFromDate(from: min, to: max, componentsToAdd: DateComponents(timeZone: TimeZone(abbreviation: "GMT"), day: 1))
-        self.dbRecordsForDay.merge(newContainer) {$1}
+        self.dbRecordsForDay.merge(newContainer) {(oldStatement, newStatement) in return newStatement}
         
-        min = calendar.date(from: calendar.dateComponents(Set(arrayLiteral: .year), from: from))!
+        min = calendar.date(from: calendar.dateComponents(Set(arrayLiteral: .year), from: lowDate))!
         min = calendar.date(byAdding: DateComponents(month: ApplicationSetup.rainSeasonStartMonth - 1), to: min)!
         max = calendar.date(from: calendar.dateComponents(Set(arrayLiteral: .year), from: highDate))!
         max = calendar.date(byAdding: DateComponents(month: ApplicationSetup.rainSeasonStartMonth - 1), to: max)!
         newContainer = self.rainSeasonTable!.getContainerFromDate(from: min, to: max, componentsToAdd: DateComponents(timeZone: TimeZone(abbreviation: "GMT"), year: 1)) { date in
             return calendar.date(byAdding: DateComponents(month: -(ApplicationSetup.rainSeasonStartMonth - 1)), to: date)!
         }
-        self.dbRainSeasons.merge(newContainer) {$1}
+        self.dbRainSeasons.merge(newContainer) {(oldStatement, newStatement) in return newStatement}
         
-        min = calendar.date(from: calendar.dateComponents(Set(arrayLiteral: .year), from: from))!
+        min = calendar.date(from: calendar.dateComponents(Set(arrayLiteral: .year), from: lowDate))!
         min = calendar.date(byAdding: DateComponents(month: ApplicationSetup.rainSeasonStartMonth - 1), to: min)!
         max = calendar.date(from: calendar.dateComponents(Set(arrayLiteral: .year), from: highDate))!
         max = calendar.date(byAdding: DateComponents(month: ApplicationSetup.rainSeasonStartMonth - 1), to: max)!
         newContainer = self.monthTable!.getContainerFromDate(from: min, to: max, componentsToAdd: DateComponents(timeZone: TimeZone(abbreviation: "GMT"), year: 1)) { date in
             return calendar.date(byAdding: DateComponents(month: -(ApplicationSetup.rainSeasonStartMonth - 1)), to: date)!
         }
-        self.dbMonthsForRainSeason.merge(newContainer) {$1}
+        self.dbMonthsForRainSeason.merge(newContainer) {(oldStatement, newStatement) in return newStatement}
         
         
         self.observers.forEach {$0.recordsChanged()}

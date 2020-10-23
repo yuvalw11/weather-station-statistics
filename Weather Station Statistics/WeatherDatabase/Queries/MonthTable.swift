@@ -19,6 +19,9 @@ class MonthTable: DBQuery, TableProtocol {
             "AvgOutHumMax": Expression<Double?>("OutHumMax").sum / (cast(Expression<Double?>("Id").count) as Expression<Double?>),
             "AvgOutHumMin": Expression<Double?>("OutHumMin").sum / (cast(Expression<Double?>("Id").count) as Expression<Double?>),
             
+            "AvgOutDewMax": Expression<Double?>("DewPointMax").sum / (cast(Expression<Double?>("Id").count) as Expression<Double?>),
+            "AvgOutDewMin": Expression<Double?>("DewPointMin").sum / (cast(Expression<Double?>("Id").count) as Expression<Double?>),
+            
             "OutTempMax": Expression<Double?>("OutTempMax").max,
             "OutTempMin": Expression<Double?>("OutTempMin").min,
             "OutHumMax": Expression<Double?>("OutHumMax").max,

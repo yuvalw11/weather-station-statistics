@@ -45,6 +45,7 @@ class HomePresentation: PresentationProtocol, ConnectionObserver, DBObserver {
             String(format: "Indoor Humidity: %d%%", Int(currentRecord.values[.inHumidity]!!)),
             String(format: "Outdoor Temperature: %.1f˚", currentRecord.values[.outTemp]!!),
             String(format: "Outdoor Humidity: %d%%", Int(currentRecord.values[.outHumidity]!!)),
+            String(format: "Outdoor Dew Point: %.1f˚", currentRecord.values[.dew]!!),
             "",
             String(format: "Absolute Pressure: %.1f", currentRecord.values[.abs]!!),
             String(format: "Relative Pressure: %.1f", currentRecord.values[.rel]!!),

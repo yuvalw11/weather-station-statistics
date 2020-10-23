@@ -31,7 +31,7 @@ class DayGraphHandlerConfiguration: GraphHandlerConfiguration {
     
     var statementToDataTypes: Dictionary<String, [String]> {
         return [
-            "By record": ["Temperature", "Humidity", "Rain", "Wind", "Radiation", "UV"]
+            "By record": ["Temperature", "Humidity", "Dew point", "Rain", "Wind", "Radiation", "UV"]
         ]
     }
     
@@ -39,6 +39,7 @@ class DayGraphHandlerConfiguration: GraphHandlerConfiguration {
         return [
             "Temperature": ["OutTemp"],
             "Humidity": ["OutHum"],
+            "Dew point": ["DewPoint"],
             "Rain": ["DailyRain", "RainRate"],
             "Wind": ["WindSpeed"],
             "Radiation": ["Radiation"],
@@ -50,10 +51,11 @@ class DayGraphHandlerConfiguration: GraphHandlerConfiguration {
         return [
             "Temperature": .Line,
             "Humidity": .Line,
+            "Dew point": .Line,
             "Rain": .Line,
-            "Wind": .Bar,
-            "Radiation": .Bar,
-            "UV": .Bar
+            "Wind": .Line,
+            "Radiation": .Line,
+            "UV": .Line
         ]
     }
     
@@ -61,6 +63,7 @@ class DayGraphHandlerConfiguration: GraphHandlerConfiguration {
         return [
             "Temperature": self.yConfigurationForDataType(dataType: "Temperature", colors: [.red], statement: self.records),
             "Humidity": self.yConfigurationForDataType(dataType: "Humidity", colors: [.blue], statement: self.records),
+            "Dew point": self.yConfigurationForDataType(dataType: "Dew point", colors: [.blue], statement: self.records),
             "Rain": self.yConfigurationForDataType(dataType: "Rain", colors: [.blue, .cyan], statement: self.records),
             "Wind": self.yConfigurationForDataType(dataType: "Wind", colors: [.gray, .darkGray], statement: self.records),
             "Radiation": self.yConfigurationForDataType(dataType: "Radiation", colors: [.orange], statement: self.records),

@@ -37,6 +37,11 @@ class MonthPresentation: StaticPresentationProtocol {
         
         let maxTemp = self.valueToString(val: self.monthRecord["OutTempMax"], roundBy: 10)
         let minTemp = self.valueToString(val: self.monthRecord["OutTempMin"], roundBy: 10)
+        let avgMaxDew = self.valueToString(val: self.monthRecord["AvgOutDewMax"], roundBy: 10)
+        let avgMinDew = self.valueToString(val: self.monthRecord["AvgOutDewMin"], roundBy: 10)
+        let avgMaxHum = String(Int(self.monthRecord["AvgOutHumMax"]!))
+        let avgMinHum = String(Int(self.monthRecord["AvgOutHumMin"]!))
+
         let maxWindSpeed = self.valueToString(val: self.monthRecord["GustSpeedMax"], roundBy: 10)
         let maxRel = self.valueToString(val: self.monthRecord["RelMax"], roundBy: 10)
         let minRel = self.valueToString(val: self.monthRecord["RelMin"], roundBy: 10)
@@ -49,6 +54,8 @@ class MonthPresentation: StaticPresentationProtocol {
         
         var str: String = ""
         str += "Tepmerature: " + avgMaxTemp + "° - " + avgMinTemp + "°\n"
+        str += "Humidity: " + avgMaxHum + "% - " + avgMinHum + "%\n"
+        str += "Dew Point: " + avgMaxDew + "° - " + avgMinDew + "°\n"
         str += "Average Presure: " + avgREL + "\n"
         str += "Avrage Maximum Radiation: " + avgMaxRad + "\n"
         str += "Average Maximum UV: " + avgMaxUVI + "\n"

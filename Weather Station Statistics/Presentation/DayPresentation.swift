@@ -31,6 +31,10 @@ class DayPresentation: StaticPresentationProtocol {
         
         let maxTemp = self.valueToString(val: self.dayRecord["OutTempMax"], roundBy: 10)
         let minTemp = self.valueToString(val: self.dayRecord["OutTempMin"], roundBy: 10)
+        let maxDew = self.valueToString(val: self.dayRecord["DewPointMax"], roundBy: 10)
+        let minDew = self.valueToString(val: self.dayRecord["DewPointMin"], roundBy: 10)
+        let maxHum = String(Int(self.dayRecord["OutHumMax"]!))
+        let minHum = String(Int(self.dayRecord["OutHumMin"]!))
         let maxWindSpeed = self.valueToString(val: self.dayRecord["GustSpeedMax"], roundBy: 10)
         let maxRel = self.valueToString(val: self.dayRecord["RelMax"], roundBy: 10)
         let minRel = self.valueToString(val: self.dayRecord["RelMin"], roundBy: 10)
@@ -42,6 +46,8 @@ class DayPresentation: StaticPresentationProtocol {
         
         var str: String = ""
         str += "Tepmerature: " + maxTemp + "° - " + minTemp + "°\n"
+        str += "Humidity: " + maxHum + "% - " + minHum + "%\n"
+        str += "Dew Point: " + maxDew + "° - " + minDew + "°\n"
         str += "Average Presure: " + avgREL + "\n"
 //        str += "Time of Rain: " + rainSpan + " minuets\n"
         str += "Rain Accumulation: " + rainAccum + "\n\n"

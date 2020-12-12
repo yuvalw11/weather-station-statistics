@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.Storyboard.XIB" version="3.0" toolsVersion="16097.2" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" initialViewController="B8D-0N-5wS">
+<document type="com.apple.InterfaceBuilder3.Cocoa.Storyboard.XIB" version="3.0" toolsVersion="17506" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" initialViewController="B8D-0N-5wS">
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="16097.2"/>
+        <deployment identifier="macosx"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="17506"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
@@ -689,67 +690,31 @@
                         <windowPositionMask key="initialPositionMask" leftStrut="YES" rightStrut="YES" topStrut="YES" bottomStrut="YES"/>
                         <rect key="contentRect" x="196" y="239" width="986" height="668"/>
                         <rect key="screenRect" x="0.0" y="0.0" width="1440" height="900"/>
-                        <toolbar key="toolbar" implicitIdentifier="3D15C2A5-509C-431D-8CFF-9090BDFB59C4" autosavesConfiguration="NO" displayMode="iconAndLabel" sizeMode="small" id="Hyn-YI-6kf">
+                        <toolbar key="toolbar" implicitIdentifier="4760A915-E272-45D5-8214-CCF008E5B7BE" autosavesConfiguration="NO" displayMode="iconAndLabel" sizeMode="regular" id="4aO-cw-wtl">
                             <allowedToolbarItems>
-                                <toolbarItem implicitItemIdentifier="NSToolbarShowColorsItem" id="7WD-Fn-inn"/>
-                                <toolbarItem implicitItemIdentifier="NSToolbarShowFontsItem" id="q1j-e2-huj"/>
-                                <toolbarItem implicitItemIdentifier="NSToolbarPrintItem" id="emi-HR-3Fq"/>
-                                <toolbarItem implicitItemIdentifier="NSToolbarSpaceItem" id="3rp-35-mpt"/>
-                                <toolbarItem implicitItemIdentifier="NSToolbarFlexibleSpaceItem" id="5Ir-Ib-Cre"/>
-                                <toolbarItem implicitItemIdentifier="29CAC465-63D1-429E-A52F-B1F99DFDC8C1" label="Connect" paletteLabel="Connect" tag="-1" image="wireless" id="WwD-jg-W4O">
-                                    <size key="minSize" width="1280" height="1280"/>
-                                    <size key="maxSize" width="1280" height="1280"/>
+                                <toolbarItem implicitItemIdentifier="NSToolbarShowColorsItem" id="LmA-ge-409"/>
+                                <toolbarItem implicitItemIdentifier="NSToolbarShowFontsItem" id="krc-wh-2py"/>
+                                <toolbarItem implicitItemIdentifier="NSToolbarPrintItem" id="mXn-ju-jX4"/>
+                                <toolbarItem implicitItemIdentifier="NSToolbarSpaceItem" id="KQV-Gg-qyk"/>
+                                <toolbarItem implicitItemIdentifier="NSToolbarFlexibleSpaceItem" id="NLB-g9-uyI"/>
+                                <toolbarItem implicitItemIdentifier="9C72CCBD-E2EB-411E-8729-269DE05C4D2B" label="Load" paletteLabel="Load" tag="-1" image="database" id="t1d-Mq-f23">
+                                    <size key="minSize" width="20" height="22"/>
+                                    <size key="maxSize" width="20" height="22"/>
                                     <connections>
-                                        <segue destination="nJP-Pp-ry9" kind="sheet" id="JTW-G4-wHg"/>
+                                        <action selector="LoadPressed:" target="B8D-0N-5wS" id="4s4-17-gx4"/>
                                     </connections>
                                 </toolbarItem>
-                                <toolbarItem implicitItemIdentifier="8D53FE73-156A-4CF4-ADC8-9FACDC470043" label="Load" paletteLabel="Load" tag="-1" image="database" id="ujc-co-DnN">
-                                    <size key="minSize" width="1159" height="1280"/>
-                                    <size key="maxSize" width="1159" height="1280"/>
+                                <toolbarItem implicitItemIdentifier="705A0F2F-1CE9-44B8-AE87-505ED0BEB57B" label="Connect" paletteLabel="Connect" tag="-1" image="wireless" id="Y0I-nl-oHi">
+                                    <size key="minSize" width="22" height="22"/>
+                                    <size key="maxSize" width="22" height="22"/>
                                     <connections>
-                                        <action selector="LoadPressed:" target="B8D-0N-5wS" id="NXC-yQ-65X"/>
+                                        <segue destination="nJP-Pp-ry9" kind="sheet" id="pl2-hR-HMT"/>
                                     </connections>
-                                </toolbarItem>
-                                <toolbarItem implicitItemIdentifier="22AB25A5-DE48-49C8-A62B-F5890FF9D9CA" label="" paletteLabel="" sizingBehavior="auto" id="hkT-vA-YUM">
-                                    <nil key="toolTip"/>
-                                    <textField key="view" horizontalHuggingPriority="251" verticalHuggingPriority="750" id="Ts6-Ry-2kr">
-                                        <rect key="frame" x="0.0" y="14" width="79" height="16"/>
-                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                                        <textFieldCell key="cell" lineBreakMode="clipping" title="WS Status: " id="faG-QC-1da">
-                                            <font key="font" usesAppearanceFont="YES"/>
-                                            <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
-                                            <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
-                                        </textFieldCell>
-                                    </textField>
-                                </toolbarItem>
-                                <toolbarItem implicitItemIdentifier="D67BF1E1-489F-439E-8AC2-292972B99DB0" label="label" paletteLabel="" image="true" autovalidates="NO" id="wTg-S9-3Nk">
-                                    <nil key="toolTip"/>
-                                    <size key="minSize" width="33" height="30"/>
-                                    <size key="maxSize" width="33" height="30"/>
-                                    <imageView key="view" horizontalHuggingPriority="251" verticalHuggingPriority="251" allowsExpansionToolTips="YES" id="PcS-hu-gkU">
-                                        <rect key="frame" x="0.0" y="14" width="33" height="30"/>
-                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                                        <imageCell key="cell" controlSize="mini" scrollable="YES" lineBreakMode="clipping" continuous="YES" refusesFirstResponder="YES" alignment="left" animates="YES" imageScaling="proportionallyDown" image="true" id="ltb-E8-10J"/>
-                                    </imageView>
-                                </toolbarItem>
-                                <toolbarItem implicitItemIdentifier="10A69AAA-EF2A-409B-AB92-F2229F36E123" label="Import" paletteLabel="Import" tag="-1" image="NSTouchBarFolderMoveToTemplate" id="gBC-ga-N16">
-                                    <size key="minSize" width="22" height="40"/>
-                                    <size key="maxSize" width="22" height="40"/>
-                                </toolbarItem>
-                                <toolbarItem implicitItemIdentifier="FD960D3E-495E-422B-8D67-7AC55A77245B" label="Export" paletteLabel="Export" tag="-1" image="NSTouchBarFolderCopyToTemplate" id="u2r-5u-nB2">
-                                    <size key="minSize" width="26" height="30"/>
-                                    <size key="maxSize" width="26" height="30"/>
                                 </toolbarItem>
                             </allowedToolbarItems>
                             <defaultToolbarItems>
-                                <toolbarItem reference="WwD-jg-W4O"/>
-                                <toolbarItem reference="ujc-co-DnN"/>
-                                <toolbarItem reference="3rp-35-mpt"/>
-                                <toolbarItem reference="gBC-ga-N16"/>
-                                <toolbarItem reference="u2r-5u-nB2"/>
-                                <toolbarItem reference="5Ir-Ib-Cre"/>
-                                <toolbarItem reference="hkT-vA-YUM"/>
-                                <toolbarItem reference="wTg-S9-3Nk"/>
+                                <toolbarItem reference="Y0I-nl-oHi"/>
+                                <toolbarItem reference="t1d-Mq-f23"/>
                             </defaultToolbarItems>
                         </toolbar>
                         <connections>
@@ -785,14 +750,14 @@
                                 </textFieldCell>
                             </textField>
                             <popUpButton verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="Wed-Qc-UdW">
-                                <rect key="frame" x="949" y="712" width="144" height="25"/>
+                                <rect key="frame" x="948" y="711" width="146" height="26"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="21" id="QoY-aD-Cgk"/>
                                     <constraint firstAttribute="width" constant="139" id="oHx-hH-aIy"/>
                                 </constraints>
                                 <popUpButtonCell key="cell" type="push" title="Home" bezelStyle="rounded" alignment="left" lineBreakMode="truncatingTail" state="on" borderStyle="borderAndBezel" imageScaling="proportionallyDown" inset="2" autoenablesItems="NO" selectedItem="JYn-Wk-RgZ" id="n7C-Qk-Er3">
                                     <behavior key="behavior" lightByBackground="YES" lightByGray="YES"/>
-                                    <font key="font" metaFont="system"/>
+                                    <font key="font" metaFont="menu"/>
                                     <menu key="menu" autoenablesItems="NO" id="kMi-gc-QAT">
                                         <items>
                                             <menuItem title="Home" state="on" id="JYn-Wk-RgZ">
@@ -858,7 +823,7 @@
                                     <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                 </textFieldCell>
                             </textField>
-                            <progressIndicator hidden="YES" wantsLayer="YES" maxValue="100" doubleValue="50" style="bar" translatesAutoresizingMaskIntoConstraints="NO" id="oRX-tW-2og">
+                            <progressIndicator hidden="YES" wantsLayer="YES" maxValue="100" style="bar" translatesAutoresizingMaskIntoConstraints="NO" id="oRX-tW-2og">
                                 <rect key="frame" x="45" y="5" width="289" height="20"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="289" id="6vt-FQ-OH8"/>
@@ -866,20 +831,12 @@
                                 </constraints>
                             </progressIndicator>
                             <progressIndicator hidden="YES" wantsLayer="YES" maxValue="100" indeterminate="YES" controlSize="small" style="spinning" translatesAutoresizingMaskIntoConstraints="NO" id="bUK-HW-cMW">
-                                <rect key="frame" x="20" y="62" width="17" height="17"/>
+                                <rect key="frame" x="20" y="-1204" width="17" height="17"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="17" id="aUH-0V-HM7"/>
                                     <constraint firstAttribute="width" constant="17" id="kG2-VM-n3F"/>
                                 </constraints>
                             </progressIndicator>
-                            <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="2FZ-1n-Q56">
-                                <rect key="frame" x="42" y="62" width="294" height="16"/>
-                                <textFieldCell key="cell" lineBreakMode="clipping" id="Yxy-eR-6c8">
-                                    <font key="font" metaFont="system"/>
-                                    <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
-                                    <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
-                                </textFieldCell>
-                            </textField>
                             <imageView hidden="YES" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="ia9-tR-2yG">
                                 <rect key="frame" x="15" y="26" width="27" height="28"/>
                                 <constraints>
@@ -904,8 +861,21 @@
                                 </constraints>
                                 <imageCell key="cell" refusesFirstResponder="YES" alignment="left" imageScaling="proportionallyDown" image="false" id="dZH-nl-28l"/>
                             </imageView>
+                            <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="xO2-UU-vok">
+                                <rect key="frame" x="43" y="62" width="293" height="16"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="16" id="CNu-a1-8c4"/>
+                                    <constraint firstAttribute="width" constant="289" id="sHX-wG-tSi"/>
+                                </constraints>
+                                <textFieldCell key="cell" lineBreakMode="clipping" id="o0K-8t-yUd">
+                                    <font key="font" metaFont="system"/>
+                                    <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                                    <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                </textFieldCell>
+                            </textField>
                         </subviews>
                         <constraints>
+                            <constraint firstItem="xO2-UU-vok" firstAttribute="leading" secondItem="YHz-MA-2kF" secondAttribute="trailing" constant="3" id="0hr-0P-QwB"/>
                             <constraint firstItem="bUK-HW-cMW" firstAttribute="leading" secondItem="Gbd-zy-OgN" secondAttribute="leading" constant="20" id="0i9-EG-Xwv"/>
                             <constraint firstItem="X2t-5y-srw" firstAttribute="centerX" secondItem="Gbd-zy-OgN" secondAttribute="centerX" id="2aW-yI-sjH"/>
                             <constraint firstItem="YHz-MA-2kF" firstAttribute="leading" secondItem="Gbd-zy-OgN" secondAttribute="leading" constant="15" id="4xf-f2-TYe"/>
@@ -917,7 +887,6 @@
                             <constraint firstAttribute="bottom" secondItem="oRX-tW-2og" secondAttribute="bottom" constant="6" id="AhQ-gH-f8v"/>
                             <constraint firstItem="q9Y-Gf-7IE" firstAttribute="top" secondItem="Gbd-zy-OgN" secondAttribute="top" constant="45" id="CjD-QJ-HzR"/>
                             <constraint firstItem="XBs-TM-rae" firstAttribute="leading" secondItem="q9Y-Gf-7IE" secondAttribute="trailing" constant="44" id="EzC-XV-e4X"/>
-                            <constraint firstItem="2FZ-1n-Q56" firstAttribute="height" secondItem="6fc-5k-CQ6" secondAttribute="height" id="GfE-wU-COK"/>
                             <constraint firstItem="6fc-5k-CQ6" firstAttribute="width" secondItem="oRX-tW-2og" secondAttribute="width" id="LXP-Sk-BN1"/>
                             <constraint firstItem="oRX-tW-2og" firstAttribute="leading" secondItem="Gbd-zy-OgN" secondAttribute="leading" constant="45" id="LeN-tc-r1e"/>
                             <constraint firstAttribute="bottom" secondItem="ia9-tR-2yG" secondAttribute="bottom" constant="26" id="PTI-uo-VQd"/>
@@ -927,13 +896,11 @@
                             <constraint firstItem="8dZ-D5-k90" firstAttribute="top" secondItem="Gbd-zy-OgN" secondAttribute="top" constant="51" id="g5b-aY-D0C"/>
                             <constraint firstItem="QhQ-AX-fgk" firstAttribute="leading" secondItem="Gbd-zy-OgN" secondAttribute="leading" constant="369" id="hg0-fp-4Vq"/>
                             <constraint firstItem="ia9-tR-2yG" firstAttribute="top" secondItem="YHz-MA-2kF" secondAttribute="bottom" constant="2" id="oF6-Pu-S5h"/>
-                            <constraint firstItem="2FZ-1n-Q56" firstAttribute="width" secondItem="6fc-5k-CQ6" secondAttribute="width" multiplier="1.00346" id="oL9-f5-4iO"/>
-                            <constraint firstItem="2FZ-1n-Q56" firstAttribute="leading" secondItem="YHz-MA-2kF" secondAttribute="trailing" constant="2" id="omE-dE-smb"/>
                             <constraint firstItem="ia9-tR-2yG" firstAttribute="leading" secondItem="Gbd-zy-OgN" secondAttribute="leading" constant="15" id="rIf-og-AIp"/>
-                            <constraint firstItem="ia9-tR-2yG" firstAttribute="firstBaseline" secondItem="2FZ-1n-Q56" secondAttribute="baseline" constant="11" id="tIH-Ew-qDE"/>
                             <constraint firstItem="X2t-5y-srw" firstAttribute="top" secondItem="Gbd-zy-OgN" secondAttribute="top" constant="9" id="ulu-2p-xzf"/>
                             <constraint firstAttribute="trailing" secondItem="8dZ-D5-k90" secondAttribute="trailing" constant="20" id="vHM-KU-Q9v"/>
                             <constraint firstItem="oRX-tW-2og" firstAttribute="top" secondItem="6fc-5k-CQ6" secondAttribute="bottom" constant="8" id="vp6-ec-88T"/>
+                            <constraint firstItem="6fc-5k-CQ6" firstAttribute="top" secondItem="xO2-UU-vok" secondAttribute="bottom" constant="14" id="wZb-gG-KF1"/>
                             <constraint firstItem="6fc-5k-CQ6" firstAttribute="leading" secondItem="ia9-tR-2yG" secondAttribute="trailing" constant="3" id="x1N-SZ-28z"/>
                             <constraint firstAttribute="trailing" secondItem="Wed-Qc-UdW" secondAttribute="trailing" constant="20" id="zs6-xk-dAl"/>
                         </constraints>
@@ -945,7 +912,7 @@
                         <outlet property="graphView" destination="QhQ-AX-fgk" id="6YC-mU-R2S"/>
                         <outlet property="leftTextLabel" destination="q9Y-Gf-7IE" id="aKM-K8-lxC"/>
                         <outlet property="loadingCircle" destination="bUK-HW-cMW" id="Jfe-aq-9if"/>
-                        <outlet property="loadingCircleLabel" destination="2FZ-1n-Q56" id="Km1-eq-ggI"/>
+                        <outlet property="loadingCircleLabel" destination="xO2-UU-vok" id="eOa-kG-o9L"/>
                         <outlet property="loadingCircleResult" destination="YHz-MA-2kF" id="i3P-lG-fBh"/>
                         <outlet property="progressBar" destination="oRX-tW-2og" id="LmQ-LN-Ch3"/>
                         <outlet property="progressBarLabel" destination="6fc-5k-CQ6" id="DSa-Fk-ulG"/>
@@ -962,7 +929,7 @@
         <scene sceneID="Hg3-9B-1qC">
             <objects>
                 <viewController id="nJP-Pp-ry9" customClass="IPConfigViewController" customModule="Weather_Station_Statistics" customModuleProvider="target" sceneMemberID="viewController">
-                    <view key="view" identifier="IPCONFIG" canDrawConcurrently="YES" id="TCv-rJ-gZ1">
+                    <view key="view" identifier="IPCONFIG" id="TCv-rJ-gZ1">
                         <rect key="frame" x="0.0" y="0.0" width="452" height="208"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <subviews>
@@ -1365,7 +1332,7 @@ Gw
                         <autoresizingMask key="autoresizingMask"/>
                         <subviews>
                             <popUpButton verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="7nH-aW-HEj">
-                                <rect key="frame" x="561" y="354" width="115" height="25"/>
+                                <rect key="frame" x="560" y="353" width="117" height="26"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="110" id="1Nm-KH-dcB"/>
                                     <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="21" id="ILy-5y-19f"/>
@@ -1374,7 +1341,7 @@ Gw
                                 </constraints>
                                 <popUpButtonCell key="cell" type="push" title="Temperature" bezelStyle="rounded" alignment="left" lineBreakMode="truncatingTail" state="on" borderStyle="borderAndBezel" imageScaling="proportionallyDown" inset="2" selectedItem="S7u-b4-1GJ" id="4lK-7Q-hFp">
                                     <behavior key="behavior" lightByBackground="YES" lightByGray="YES"/>
-                                    <font key="font" metaFont="system"/>
+                                    <font key="font" metaFont="menu"/>
                                     <menu key="menu" id="LVj-or-8sR">
                                         <items>
                                             <menuItem title="Temperature" state="on" id="S7u-b4-1GJ"/>
@@ -1391,10 +1358,10 @@ Gw
                                 </connections>
                             </popUpButton>
                             <popUpButton verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="kXj-St-bLK">
-                                <rect key="frame" x="561" y="323" width="115" height="25"/>
+                                <rect key="frame" x="560" y="322" width="117" height="26"/>
                                 <popUpButtonCell key="cell" type="push" title="by time" bezelStyle="rounded" alignment="left" lineBreakMode="truncatingTail" state="on" borderStyle="borderAndBezel" imageScaling="proportionallyDown" inset="2" selectedItem="WTB-nu-2Bw" id="gvw-go-E2f">
                                     <behavior key="behavior" lightByBackground="YES" lightByGray="YES"/>
-                                    <font key="font" metaFont="system"/>
+                                    <font key="font" metaFont="menu"/>
                                     <menu key="menu" id="ADD-Sg-88Z">
                                         <items>
                                             <menuItem title="by time" state="on" id="WTB-nu-2Bw"/>
@@ -1458,7 +1425,7 @@ Gw
                                 </connections>
                             </textField>
                             <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="k0K-ry-Hk3">
-                                <rect key="frame" x="575" y="4" width="109" height="32"/>
+                                <rect key="frame" x="574" y="4" width="111" height="32"/>
                                 <buttonCell key="cell" type="push" title="Enlarge" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="9uo-Zo-ZG7">
                                     <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                     <font key="font" metaFont="system"/>
@@ -1468,7 +1435,7 @@ Gw
                                 </connections>
                             </button>
                             <containerView translatesAutoresizingMaskIntoConstraints="NO" id="w54-1Q-OOe">
-                                <rect key="frame" x="549" y="37" width="162" height="209"/>
+                                <rect key="frame" x="549" y="36" width="162" height="210"/>
                                 <connections>
                                     <segue destination="2IW-2M-TB1" kind="embed" id="hBd-qR-92U"/>
                                 </connections>
@@ -1581,8 +1548,6 @@ Gw
         <segue reference="s4G-PP-fuQ"/>
     </inferredMetricsTieBreakers>
     <resources>
-        <image name="NSTouchBarFolderCopyToTemplate" width="26" height="30"/>
-        <image name="NSTouchBarFolderMoveToTemplate" width="22" height="30"/>
         <image name="database" width="1159" height="1280"/>
         <image name="false" width="1280" height="1280"/>
         <image name="true" width="1280" height="1266"/>

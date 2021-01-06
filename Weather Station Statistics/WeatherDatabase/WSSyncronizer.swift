@@ -42,7 +42,7 @@ internal class WSSyncronizer {
         }
         
         for file in response.files {
-            let annotatedFileRecordsLength = recordsForYearInDB[file]!
+            let annotatedFileRecordsLength = recordsForYearInDB[file] ?? 0
             let wsFileRecordsLength = response.getNumberOfRecordsForFile(file: file)!
             let missingRecordsLength = wsFileRecordsLength - annotatedFileRecordsLength
             if missingRecordsLength > 0 {
